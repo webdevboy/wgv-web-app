@@ -17,7 +17,7 @@ const styles = theme => ({
 		},
 		body: {
 			height: '100%',
-			fontFamily: 'sans-serif',
+			fontFamily: 'Raleway',
 			margin: 0,
 		},
 		input: {

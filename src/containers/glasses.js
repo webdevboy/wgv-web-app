@@ -131,7 +131,7 @@ class Glasses extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Your glasses</div>
+                    <div className={classes.title}>your glasses</div>
                     <div className={classes.link}>'see' more</div>
                 </div>
             </div>
@@ -149,7 +149,7 @@ class Glasses extends Component {
                     <Grid item xs={12} md={6} className={classes.item}>
                       <div className={classes.card}>
                         <div className={classes.in2}>
-                          <div className={classes.h1}>About your glasses</div>
+                          <div className={classes.h1}>about your glasses</div>
                           <div className={classes.list}>
                             <div className={classes.h2}>LENS</div>
                             <div className={classes.info} />

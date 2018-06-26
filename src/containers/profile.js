@@ -111,7 +111,7 @@ class Profile extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Your next visit</div>
+                    <div className={classes.title}>your next visit</div>
                     <div className={classes.date}>09 / 20 / 2018</div>
                 </div>
             </div>

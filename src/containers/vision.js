@@ -76,7 +76,7 @@ class Vision extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Your vision</div>
+                    <div className={classes.title}>your vision</div>
                     <div className={classes.link}>believing is seeing</div>
                 </div>
             </div>

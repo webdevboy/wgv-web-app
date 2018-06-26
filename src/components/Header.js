@@ -112,7 +112,7 @@ class Header extends React.Component {
 											className={classes.button}
 											onClick={this.handleClick}
 										>
-											Open Menu
+											Jane Joe
 										</Button>
 										<Menu
 											id="simple-menu"

@@ -160,8 +160,8 @@ class CoolSport extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>In a really cool sport nearby</div>
-                    <div className={classes.link}>You gotta 'see'</div>
+                    <div className={classes.title}>in a really cool sport nearby</div>
+                    <div className={classes.link}>you gotta 'see'</div>
                 </div>
             </div>
             <div className={classes.contents}>
@@ -170,7 +170,7 @@ class CoolSport extends Component {
                   <Grid container className={classes.grid} justify="center">
                     <Grid item xs={12} md={6} className={classes.grid1}>
                       <div className={classes.item}>
-                        <div className={classes.h1}>Downtown LA</div>
+                        <div className={classes.h1}>downtown LA</div>
                         <div className={classes.h2}>555 West 5th Street, 34th floor</div>
                       </div>
                       <div className={classes.item}>

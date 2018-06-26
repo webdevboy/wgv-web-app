@@ -196,8 +196,8 @@ class Account extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Access your account</div>
-                    <div className={classes.link}>Fill in your information below</div>
+                    <div className={classes.title}>access your account</div>
+                    <div className={classes.link}>fill in your information below</div>
                 </div>
             </div>
             <div className={classes.contents}>

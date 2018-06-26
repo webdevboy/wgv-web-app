@@ -179,7 +179,7 @@ class Delivered extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Delivered</div>
+                    <div className={classes.title}>delivered</div>
                     <div className={classes.link}>Just lift a finger. we got you</div>
                 </div>
             </div>

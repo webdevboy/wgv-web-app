@@ -181,6 +181,14 @@ class Index extends Component {
 		})
 	}
 	
+	mobileNavigate(type) {
+		if(type === 'login') {
+			this.navigate('account');
+		} else {
+			this.props.logout();
+		}
+		this.handleDrawerClose();
+	}
 
 	render() {
 		const {
@@ -209,7 +217,10 @@ class Index extends Component {
           </IconButton>
         </div>
         <Divider />
-        <List className={classes.list}>Login</List>
+				{isAuthenticated 
+					? <List className={classes.list} onClick={() => this.mobileNavigate('logout')}>Logout</List>
+        	:	<List className={classes.list} onClick={() => this.mobileNavigate('login')} >Login</List>
+				}
         <Divider />
       </Drawer>
     );

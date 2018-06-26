@@ -76,7 +76,7 @@ class Prescription extends Component {
           <div className={classes.root}>
             <div className={classes.contentHeader}>
                 <div className={classes.container}>
-                    <div className={classes.title}>Your prescription</div>
+                    <div className={classes.title}>your prescription</div>
                     <div className={classes.link}>focused on details</div>
                 </div>
             </div>
