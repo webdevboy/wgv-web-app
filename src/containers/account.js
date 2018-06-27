@@ -14,7 +14,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 
 // Components

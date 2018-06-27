@@ -64,6 +64,19 @@ const styles = theme => ({
         margin: '50px 0',
       },
     },
+    in: {
+      padding: '50px 30px'
+    },
+    h1: {
+      width: '100%',
+      fontSize: 30
+    },
+    p1: {
+      paddingTop: 30,
+      width: '100%',
+      fontSize: 15,
+      lineHeight: 1.5
+    }
 })
 
 class Vision extends Component {
@@ -84,7 +97,16 @@ class Vision extends Component {
                 <div className={classes.container}>
                 <Slide direction="left" in={true} mountOnEnter unmountOnExit>
                   <div className={classes.grid}>
-                    
+                    <div className={classes.in}>
+                      <div className={classes.h1}>admin final content</div>
+                      <div className={classes.p1}>Lorem ipsum has become the industry standard for design mockups and prototypes. By adding a little bit 
+of Latin to a mockup, you’re able to show clients a more complete version of your design without actually 
+having to invest time and effort drafting copy.
+But despite all its benefits, seeing the same random Latin text in every design can get a little boring for you 
+and your clients. So if you have a client who’s got a sense of humour or if you’re just tired of going the 
+traditional route in your mockups, here are 15 creative and funny lorem ipsum text generators that are 
+sure to lighten the mood at any client meeting.</div>
+                    </div>
                   </div>
                 </Slide>
                 </div>
