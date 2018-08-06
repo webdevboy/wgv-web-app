@@ -134,7 +134,7 @@ const styles = theme => ({
 })
 
 const validateEmail = (email) => {
-  let EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return EMAIL_PATTERN.test(String(email).toLowerCase());
 }
 
@@ -154,6 +154,9 @@ class Account extends Component {
         regConfirmPassword: '',
         emailError: false,
         passwordError: false,
+        regEmailError: false,
+        regPasswordError: false,
+        regPasswordMatch: false,
       };
 
     }
@@ -167,6 +170,15 @@ class Account extends Component {
           break;
         case 'password':
           validate.passwordError = !validatePassword(this.state.password)
+          break;
+        case 'regEmail':
+          validate.regEmailError = !validateEmail(this.state.regEmail)
+          break;
+        case 'regPassword':
+          validate.regPasswordError = !validatePassword(this.state.regPassword)
+          break;
+        case 'regConfirmPassword':
+          validate.regPasswordMatch = !(this.state.regPassword === event.target.value)
           break;
         default:
           break;
@@ -182,15 +194,23 @@ class Account extends Component {
       const { email, password, emailError, passwordError } = this.state
 
       if ( email !== '' && password !== '' && !emailError && !passwordError ) {
-        this.props.push('/profile');
+        // this.props.push('/profile');
         this.props.loginAttempt({ email, password });        
+      }
+    }
+
+    handleRegisterSubmit() {
+      const { regEmail, regPassword, regConfirmPassword, regEmailError, regPasswordError, regPasswordMatch } = this.state
+
+      if ( regEmail !== '' && regPassword !== '' && regConfirmPassword !== '' && !regEmailError && !regPasswordError && !regPasswordMatch ) {
+        this.props.registerAttempt({ username: regEmail, password: regPassword});        
       }
     }
 
     render() {
       
       const { classes } = this.props
-      const { emailError, passwordError } = this.state
+      const { emailError, passwordError, regEmailError, regPasswordError, regPasswordMatch } = this.state
       
       return (
           <div className={classes.root}>
@@ -242,23 +262,29 @@ class Account extends Component {
                       <FormControl className={classes.formControl} aria-describedby="reg-email-helper-text">
                         <InputLabel htmlFor="reg-email-helper" className={classes.formLabel}>Email</InputLabel>
                         <Input id="reg-email-helper" className={classes.formInput} value={this.state.regEmail} type="email" onChange={this.handleChange('regEmail')} />
-                        {/* <FormHelperText id="reg-email-error-text" className={classes.formError}>Invalid Email!</FormHelperText> */}
+                        {regEmailError &&
+                          <FormHelperText id="reg-email-error-text" className={classes.formError}>Invalid Email!</FormHelperText>
+                        }
                       </FormControl>
 
                       <FormControl className={classes.formControl} aria-describedby="reg-password-helper-text">
                         <InputLabel htmlFor="reg-password-helper" className={classes.formLabel}>Password</InputLabel>
                         <Input id="reg-password-helper" className={classes.formInput} value={this.state.regPassword} type="password" onChange={this.handleChange('regPassword')} />
-                        {/* <FormHelperText id="reg-password-error-text" className={classes.formError}>Invalid Password!</FormHelperText> */}
+                        {regPasswordError &&
+                          <FormHelperText id="reg-password-error-text" className={classes.formError}>Invalid Password!</FormHelperText>
+                        }
                       </FormControl>
 
                       <FormControl className={classes.formControl} aria-describedby="reg-confirm-password-helper-text">
                         <InputLabel htmlFor="reg-confirm-password-helper" className={classes.formLabel}>Confirm Password</InputLabel>
                         <Input id="reg-confirm-password-helper" className={classes.formInput} value={this.state.regConfirmPassword} type="password" onChange={this.handleChange('regConfirmPassword')} />
-                        {/* <FormHelperText id="reg-confirm-password-error-text" className={classes.formError}>Invalid Password!</FormHelperText> */}
+                        {regPasswordMatch &&
+                          <FormHelperText id="reg-confirm-password-error-text" className={classes.formError}>Password does not match the confirm password.</FormHelperText>
+                        }
                       </FormControl>
 
                        <div className={classes.buttons}>
-                        <Button className={classes.button}>REGISTER</Button>
+                        <Button className={classes.button} onClick={() => this.handleRegisterSubmit()}>REGISTER</Button>
                       </div>
                     </Grid>
                   </Grid>
@@ -276,6 +302,7 @@ Account.propTypes = {
 
 const {
   loginAttempt,
+  registerAttempt,
 } = Actions;
 
 const mapStateToProps = () => ({})
@@ -283,7 +310,8 @@ const mapStateToProps = () => ({})
 const mapDispatchToProps = dispatch => bindActionCreators({
 	push,
   replace,
-  loginAttempt
+  loginAttempt,
+  registerAttempt
 }, dispatch)
 
 export default compose(

@@ -11,7 +11,7 @@ export default api => {
 
 			// yield call(delay, 3000)
 			// let error = '[500] Authentication failed.'
-
+console.log(user);
 			const success = '[200] Login successful.'
 			yield put(Actions.loginAuthSuccess({token: 'token'}))
 			yield put(Actions.loginUserSuccess(user, success))
@@ -71,7 +71,7 @@ export default api => {
 		try {
 			let error = '[500] register failed.'
 			const registerResp = yield call(api.register, user)
-			
+console.log('before:', user, registerResp)			
 			if (prop('ok', registerResp)) {
 				const userData = path(['data'], registerResp)
 				const success = path(['message'], registerResp) || '[200] Register successful.'

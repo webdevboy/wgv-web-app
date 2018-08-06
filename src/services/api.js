@@ -4,7 +4,7 @@ import { prop, contains } from 'ramda'
 
 // Define API
 const api = apisauce.create({
-	baseURL: process.env.REACT_APP_API_BASE_URL+'/v1',
+	baseURL: process.env.REACT_APP_API_BASE_URL+'/api',
 	headers: {
 		'X-Requested-With': 'XMLHttpRequest',
 		'Accept': 'application/json',
