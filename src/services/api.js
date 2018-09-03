@@ -17,7 +17,7 @@ api.addRequestTransform(request => {
 	const method = prop('method', request)
 
 	if (contains(method, ['post', 'put'])) {
-		request.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+		request.headers['Content-Type'] = 'application/json'
 		request.data = stringify(request.data)
 	}
 })

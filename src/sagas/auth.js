@@ -71,7 +71,9 @@ console.log(user);
 		try {
 			let error = '[500] register failed.'
 			const registerResp = yield call(api.register, user)
-console.log('before:', user, registerResp)			
+
+			console.log('before:', user, registerResp)
+		
 			if (prop('ok', registerResp)) {
 				const userData = path(['data'], registerResp)
 				const success = path(['message'], registerResp) || '[200] Register successful.'

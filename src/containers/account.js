@@ -150,11 +150,15 @@ class Account extends Component {
         email: '',
         password: '',
         regEmail: '',
+        regFirstName: '',
+        regLastName: '',
         regPassword: '',
         regConfirmPassword: '',
         emailError: false,
         passwordError: false,
         regEmailError: false,
+        regFirstNameError: false,
+        regLastNameError: false,
         regPasswordError: false,
         regPasswordMatch: false,
       };
@@ -170,6 +174,12 @@ class Account extends Component {
           break;
         case 'password':
           validate.passwordError = !validatePassword(this.state.password)
+          break;
+        case 'regFirstName':
+          validate.regFirstNameError = !(this.state.regFirstName !== '')
+          break;
+        case 'regLastName':
+          validate.regLastNameError = !(this.state.regLastName !== '')
           break;
         case 'regEmail':
           validate.regEmailError = !validateEmail(this.state.regEmail)
@@ -200,17 +210,17 @@ class Account extends Component {
     }
 
     handleRegisterSubmit() {
-      const { regEmail, regPassword, regConfirmPassword, regEmailError, regPasswordError, regPasswordMatch } = this.state
+      const { regFirstName, regLastName, regEmail, regPassword, regConfirmPassword, regFirstNameError, regLastNameError, regEmailError, regPasswordError, regPasswordMatch } = this.state
 
-      if ( regEmail !== '' && regPassword !== '' && regConfirmPassword !== '' && !regEmailError && !regPasswordError && !regPasswordMatch ) {
-        this.props.registerAttempt({ username: regEmail, password: regPassword});        
+      if ( regFirstName !== '' && regLastName !== '' && regEmail !== '' && regPassword !== '' && regConfirmPassword !== '' && !regEmailError && !regPasswordError && !regPasswordMatch && !regFirstNameError && !regLastNameError ) {
+        this.props.registerAttempt({ username: regEmail, password: regPassword, first_name: regFirstName, last_name: regLastName, appointments: []});        
       }
     }
 
     render() {
       
       const { classes } = this.props
-      const { emailError, passwordError, regEmailError, regPasswordError, regPasswordMatch } = this.state
+      const { emailError, passwordError, regEmailError, regPasswordError, regPasswordMatch, regFirstNameError, regLastNameError } = this.state
       
       return (
           <div className={classes.root}>
@@ -258,6 +268,22 @@ class Account extends Component {
                     </Grid>
                     <Grid item xs={12} md={6} className={classes.gridx}>
                       <div className={classes.formTitle}>Register</div>
+
+                      <FormControl className={classes.formControl} aria-describedby="reg-first-name-helper-text">
+                        <InputLabel htmlFor="reg-first-name-helper" className={classes.formLabel}>First Name</InputLabel>
+                        <Input id="reg-first-name-helper" className={classes.formInput} value={this.state.regFirstName} type="text" onChange={this.handleChange('regFirstName')} />
+                        {regFirstNameError &&
+                          <FormHelperText id="reg-first-name-error-text" className={classes.formError}>Required!</FormHelperText>
+                        }
+                      </FormControl>
+
+                      <FormControl className={classes.formControl} aria-describedby="reg-last-name-helper-text">
+                        <InputLabel htmlFor="reg-last-name-helper" className={classes.formLabel}>Last Name</InputLabel>
+                        <Input id="reg-last-name-helper" className={classes.formInput} value={this.state.regLastName} type="text" onChange={this.handleChange('regLastName')} />
+                        {regLastNameError &&
+                          <FormHelperText id="reg-last-name-error-text" className={classes.formError}>Required!</FormHelperText>
+                        }
+                      </FormControl>
 
                       <FormControl className={classes.formControl} aria-describedby="reg-email-helper-text">
                         <InputLabel htmlFor="reg-email-helper" className={classes.formLabel}>Email</InputLabel>
