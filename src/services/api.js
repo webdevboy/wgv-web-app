@@ -16,17 +16,17 @@ const api = apisauce.create({
 api.addRequestTransform(request => {
 	const method = prop('method', request)
 
-	if (contains(method, ['post', 'put'])) {
+	if (contains(method, ['post', 'put', 'get'])) {
 		request.headers['Content-Type'] = 'application/json'
-		request.data = stringify(request.data)
+		// request.data = stringify(request.data)
 	}
+	console.log('request::', request);
 })
 
 api.addResponseTransform(response => {
 	const ok = prop('ok', response)
 	const data = prop('data', response)
 	const problem = prop('problem', response)
-	// console.log('Response ::', ok, response)
 
 	if (!ok) {
 		// console.log('Problem ::', problem, response)
@@ -85,7 +85,7 @@ api.addResponseTransform(response => {
 
 // Endpoints
 const ENDPOINT = {
-	OAUTH: '/users/authenticate',
+	OAUTH: '/users/login',
 	REGISTER: '/users',
 	LOGOUT: '/logout',
 	USER: '/users/profile',
@@ -94,8 +94,8 @@ const ENDPOINT = {
 // TODO how to cancel/abort http request ?
 export default {
 	// Headers
-	setAuthHeader: token => api.setHeader('x-access-token', token),
-	deleteAuthHeader: () => api.deleteHeader('x-access-token'),
+	setAuthHeader: token => api.setHeader('Authorization', 'Basic '+token),
+	deleteAuthHeader: () => api.deleteHeader('Authorization'),
 	// Auth
 	auth: user => api.post(`${ENDPOINT.OAUTH}`, user),
 	register: user => api.post(`${ENDPOINT.REGISTER}`, user),

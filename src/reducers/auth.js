@@ -3,7 +3,8 @@ import Immutable from 'seamless-immutable'
 import { createReducer } from 'reduxsauce'
 
 const INITIAL_STATE = Immutable({
-	uiLoading: false,
+	uiLoadingIn: false,
+	uiLoadingNew: false,
 	token: null,
 	user: null,
 	error: null,
@@ -13,7 +14,7 @@ const INITIAL_STATE = Immutable({
 const loginAttempt = state => {
 	const newState = Immutable(state)
 	return newState.merge({
-		uiLoading: true,
+		uiLoadingIn: true,
 	})
 }
 
@@ -25,14 +26,14 @@ const loginAuthSuccess = (state, { auth }) => {
 
 const loginUserSuccess = (state, { user }) => {
 	return state.merge({
-		uiLoading: false,
+		uiLoadingIn: false,
 		user: user,
 	})
 }
 
 const loginFailure = (state, { error }) => {
 	return state.merge({
-		uiLoading: false,
+		uiLoadingIn: false,
 		error: error,
 	})
 }
@@ -40,20 +41,24 @@ const loginFailure = (state, { error }) => {
 const registerAttempt = state => {
 	const newState = Immutable(state)
 	return newState.merge({
-		uiLoading: true,
+		uiLoadingNew: true,
 		error: INITIAL_STATE.error,
 	})
 }
 
-const registerSuccess = state => {
+const registerSuccess = (state, { user }) => {
 	return state.merge({
-		uiLoading: false,
+		token: user.token,
+		uiLoadingNew: false,
+		user: {
+			username: user.username
+		}
 	})
 }
 
 const registerFailure = (state, { error }) => {
 	return state.merge({
-		uiLoading: false,
+		uiLoadingNew: false,
 		error: error,
 	})
 }

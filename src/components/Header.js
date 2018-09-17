@@ -92,7 +92,7 @@ class Header extends React.Component {
 	}
 
 	render() {
-		const { classes, navigate, isAuthenticated } = this.props
+		const { classes, navigate, isAuthenticated, user } = this.props
     const { anchorEl } = this.state
 
     return (
@@ -112,7 +112,7 @@ class Header extends React.Component {
 											className={classes.button}
 											onClick={this.handleClick}
 										>
-											Jane Joe
+											{user.username}
 										</Button>
 										<Menu
 											id="simple-menu"

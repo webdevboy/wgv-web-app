@@ -10,33 +10,28 @@ export default api => {
 		try {
 
 			// yield call(delay, 3000)
-			// let error = '[500] Authentication failed.'
-console.log(user);
-			const success = '[200] Login successful.'
-			yield put(Actions.loginAuthSuccess({token: 'token'}))
-			yield put(Actions.loginUserSuccess(user, success))
-			// const authResp = yield call(api.auth, user)
+			let error = '[500] Authentication failed.'
+			const authResp = yield call(api.auth, user)
+			const authData = prop('data', authResp)
+console.log('authResp::', authResp);
+			// Did user login?
+			if (authData.ok) {
+				yield put(Actions.loginAuthSuccess(authData))
 
-			// // Did user login?
-			// if (prop('ok', authResp)) {
-			// 	const authData = prop('data', authResp)
-			// 	yield put(Actions.loginAuthSuccess(authData))
+				// Attempt to get user
+				const userResp = yield call(api.getUser, user)
+				const userData = path(['data'], userResp)
+console.log(userResp);
 
-			// 	// Attempt to get user
-			// 	const userResp = yield call(api.getUser)
-
-			// 	// Finally logged in?
-			// 	if (prop('ok', userResp)) {
-			// 		const userData = path(['data'], userResp)
-			// 		const success = '[200] Login successful.'
-			// 		return yield put(Actions.loginUserSuccess(userData, success))
-			// 	}
-			// } else {
-			// 	error = path(['data', 'message'], authResp) || error
-			// }
-
-			// // User did not login
-			// yield put(Actions.loginFailure(error))
+				// Finally logged in?
+				if (userData.ok) {
+					const success = '[200] Login successful.'
+					return yield put(Actions.loginUserSuccess(userData.data, success))
+				}
+			} else {
+				error = path(['data', 'error_msg'], authResp) || error
+				yield put(Actions.loginFailure(error))
+			}
 		} catch (error) {
 			yield put(Actions.loginFailure(error))
 		} finally {
@@ -71,16 +66,17 @@ console.log(user);
 		try {
 			let error = '[500] register failed.'
 			const registerResp = yield call(api.register, user)
+			const registerData = path(['data'], registerResp)
 
-			console.log('before:', user, registerResp)
-		
-			if (prop('ok', registerResp)) {
-				const userData = path(['data'], registerResp)
-				const success = path(['message'], registerResp) || '[200] Register successful.'
-				yield put(Actions.registerSuccess(userData, success))
+			if (registerData.ok) {
+
+				const regData = registerData.data
+				const success = registerData.message || '[200] Register successful.'
+
+				yield put(Actions.registerSuccess(regData, success))
 
 			} else {
-				error = path(['data', 'message'], registerResp) || error
+				error = path(['data', 'data'], registerResp) || error
 				yield put(Actions.registerFailure(error))
 			}			
 
@@ -101,7 +97,6 @@ console.log(user);
 
 			const action = yield take([
 				Types.LOGOUT,
-				Types.REGISTER_SUCCESS,
 				Types.REGISTER_FAILURE,
 			])
 

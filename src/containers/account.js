@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { and } from 'ramda'
 import { connect } from 'react-redux'
 import { bindActionCreators, compose } from 'redux'
 import { push, replace } from 'react-router-redux'
@@ -16,6 +17,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Components
 
@@ -104,6 +107,7 @@ const styles = theme => ({
       color: 'red',
     },
     buttons: {
+      position: 'relative',
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
@@ -117,6 +121,13 @@ const styles = theme => ({
       '&:hover': {
         backgroundColor: 'black',
       },
+    },
+    buttonProgress: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -2,
+      marginLeft: -12,
     },
     actions: {
       display: 'flex',
@@ -165,6 +176,12 @@ class Account extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+      if ( this.props.isAuthenticated || nextProps.isAuthenticated ) {
+        this.props.push('/profile');
+      }
+    }
+
     handleChange = name => event => {
       const validate = {};
 
@@ -205,7 +222,7 @@ class Account extends Component {
 
       if ( email !== '' && password !== '' && !emailError && !passwordError ) {
         // this.props.push('/profile');
-        this.props.loginAttempt({ email, password });        
+        this.props.loginAttempt({ username: email, password });
       }
     }
 
@@ -219,9 +236,9 @@ class Account extends Component {
 
     render() {
       
-      const { classes } = this.props
+      const { classes, uiLoadingIn, uiLoadingNew, token } = this.props
       const { emailError, passwordError, regEmailError, regPasswordError, regPasswordMatch, regFirstNameError, regLastNameError } = this.state
-      
+  
       return (
           <div className={classes.root}>
             <div className={classes.contentHeader}>
@@ -262,7 +279,10 @@ class Account extends Component {
                       </div>
 
                       <div className={classes.buttons}>
-                        <Button className={classes.button} onClick={() => this.handleLoginSubmit()}>LOGIN</Button>
+                        <Button className={classes.button} onClick={() => this.handleLoginSubmit()} disabled={uiLoadingIn}>
+                         {!uiLoadingIn && 'LOGIN' }
+                        </Button>
+                        {uiLoadingIn && <CircularProgress size={24} className={classes.buttonProgress} /> }
                       </div>
 
                     </Grid>
@@ -310,7 +330,10 @@ class Account extends Component {
                       </FormControl>
 
                        <div className={classes.buttons}>
-                        <Button className={classes.button} onClick={() => this.handleRegisterSubmit()}>REGISTER</Button>
+                        <Button className={classes.button} onClick={() => this.handleRegisterSubmit()} disabled={uiLoadingNew}>
+                          {!uiLoadingNew && 'REGISTER'}
+                        </Button>
+                        {uiLoadingNew && <CircularProgress size={24} className={classes.buttonProgress} />}
                       </div>
                     </Grid>
                   </Grid>
@@ -331,7 +354,14 @@ const {
   registerAttempt,
 } = Actions;
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({
+	auth: { uiLoadingIn, uiLoadingNew, token, user },
+}) => ({
+  isAuthenticated: and(!!token, !!user),
+  uiLoadingIn,
+  uiLoadingNew,
+  token
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	push,

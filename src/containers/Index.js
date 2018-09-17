@@ -163,6 +163,14 @@ class Index extends Component {
 		}
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if ( this.props.notificationMessage !== nextProps.notificationMessage && nextProps.notificationMessage ) {
+			this.setState({
+				notify: true
+			})
+		}
+	}
+
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -197,7 +205,8 @@ class Index extends Component {
 			notificationLevel,
 			clearNotification,
 			isAuthenticated,
-			logout
+			logout,
+			user
 		} = this.props
 		const { open } = this.state
 		const { navigate } = this
@@ -256,7 +265,7 @@ class Index extends Component {
               [classes.contentShift]: open,
               [classes[`contentShift-left`]]: open,
             })}>
-						<Header {...{isAuthenticated, logout, navigate}}/>
+						<Header {...{isAuthenticated, logout, navigate, user}}/>
 						<ConnectedSwitch>
 							<Route exact path="/" component={Intro} />
 							<Route exact path="/coolspot" component={CoolSpot} />

@@ -31,7 +31,7 @@ const theme = createMuiTheme({
 			main: red['A400'],
 		},
 		background: {
-			default: 'white',
+			default: '#fff',
 			paper: blueGrey[900],
 		},
   },
@@ -51,7 +51,7 @@ const theme = createMuiTheme({
 		},
 		MuiCircularProgress: {
 			colorPrimary: {
-				color: 'white',
+				color: '#fff',
 			},
 		},
 		MuiSvgIcon: {
@@ -96,12 +96,12 @@ const theme = createMuiTheme({
 		},
 		MuiCheckbox: {
 			checkedSecondary: {
-				color: 'white',
+				color: '#fff',
 			},
 		},
 		MuiRadio: {
 			checkedSecondary: {
-				color: 'white',
+				color: '#fff',
 			},
 		},
 	},
