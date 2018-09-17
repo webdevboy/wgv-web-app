@@ -8,6 +8,7 @@ const api = apisauce.create({
 	headers: {
 		'X-Requested-With': 'XMLHttpRequest',
 		'Accept': 'application/json',
+		'Content-Type': 'application/json',
 	},
 	timeout: 60000,
 })
@@ -16,11 +17,13 @@ const api = apisauce.create({
 api.addRequestTransform(request => {
 	const method = prop('method', request)
 
-	if (contains(method, ['post', 'put', 'get'])) {
+	if (contains(method, ['post', 'put'])) {
 		request.headers['Content-Type'] = 'application/json'
 		// request.data = stringify(request.data)
 	}
-	console.log('request::', request);
+	if (contains(method, ['get'])) {
+		request.data = {}
+	}
 })
 
 api.addResponseTransform(response => {
@@ -100,5 +103,5 @@ export default {
 	auth: user => api.post(`${ENDPOINT.OAUTH}`, user),
 	register: user => api.post(`${ENDPOINT.REGISTER}`, user),
 	logout: () => api.get(ENDPOINT.LOGOUT),
-	getUser: () => api.get(ENDPOINT.USER),
+	getUser: () => api.get(`${ENDPOINT.USER}`, {}),
 }
