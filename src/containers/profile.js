@@ -105,7 +105,7 @@ class Profile extends Component {
 
     render() {
       
-      const { classes } = this.props
+      const { classes, user } = this.props
       
       return (
           <div className={classes.root}>
@@ -121,7 +121,7 @@ class Profile extends Component {
                 
                   <div className={classes.userInfo}>
                     <img src={Avatar} className={classes.avatar} alt=''/>
-                    <div className={classes.userName}>Jane Joe</div>
+                    <div className={classes.userName}>{user.first_name} {user.last_name}</div>
                   </div>
 
                   <Grid container className={classes.grid} justify="center">
@@ -166,7 +166,11 @@ Profile.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({
+	auth: { user },
+}) => ({
+  user
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	push,

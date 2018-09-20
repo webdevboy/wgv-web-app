@@ -97,7 +97,7 @@ const ENDPOINT = {
 // TODO how to cancel/abort http request ?
 export default {
 	// Headers
-	setAuthHeader: token => api.setHeader('Authorization', 'Basic '+token),
+	setAuthHeader: token => api.setHeader('Authorization', 'Basic ' + window.btoa(token+':unused')),
 	deleteAuthHeader: () => api.deleteHeader('Authorization'),
 	// Auth
 	auth: user => api.post(`${ENDPOINT.OAUTH}`, user),

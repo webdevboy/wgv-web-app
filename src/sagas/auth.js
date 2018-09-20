@@ -13,7 +13,7 @@ export default api => {
 			let error = '[500] Authentication failed.'
 			const authResp = yield call(api.auth, user)
 			const authData = prop('data', authResp)
-console.log('authResp::', authResp);
+			
 			// Did user login?
 			if (authData.ok) {
 				yield put(Actions.loginAuthSuccess(authData))
@@ -21,7 +21,6 @@ console.log('authResp::', authResp);
 				// Attempt to get user
 				const userResp = yield call(api.getUser, user)
 				const userData = path(['data'], userResp)
-console.log(userResp);
 
 				// Finally logged in?
 				if (userData.ok) {
@@ -71,9 +70,18 @@ console.log(userResp);
 			if (registerData.ok) {
 
 				const regData = registerData.data
-				const success = registerData.message || '[200] Register successful.'
 
-				yield put(Actions.registerSuccess(regData, success))
+				yield put(Actions.loginAuthSuccess(regData))
+
+				// Attempt to get user
+				const userResp = yield call(api.getUser, user)
+				const userData = path(['data'], userResp)
+
+				// Finally logged in?
+				if (userData.ok) {
+					const success = '[200] Register successful.'
+					return yield put(Actions.loginUserSuccess(userData.data, success))
+				}
 
 			} else {
 				error = path(['data', 'data'], registerResp) || error

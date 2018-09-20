@@ -48,11 +48,7 @@ const registerAttempt = state => {
 
 const registerSuccess = (state, { user }) => {
 	return state.merge({
-		token: user.token,
-		uiLoadingNew: false,
-		user: {
-			username: user.username
-		}
+		token: user.token
 	})
 }
 
