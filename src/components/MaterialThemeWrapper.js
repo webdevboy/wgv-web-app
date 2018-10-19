@@ -18,12 +18,18 @@ const styles = theme => ({
 		body: {
 			height: '100%',
 			fontFamily: 'Raleway',
+			fontWeight: 600,
 			margin: 0,
 		},
+		h1: { fontFamily: 'Raleway' },
+		h3: { fontFamily: 'Raleway' },
+		p: { fontfamily: 'Raleway' },
+		blockquote: { fontFamily: 'Raleway' },
 		input: {
 			'&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus': {
 				transition: 'background-color 5000s ease-in-out 0s',
 				WebkitTextFillColor: '#fff !important',
+				fontFamily: 'Raleway'
 			}
 		}
 	},
