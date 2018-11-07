@@ -5,7 +5,7 @@ import { Types, Creators as Actions } from '../actions'
 
 
 export default api => {
-  // AUTH
+	// AUTH
 	function* auth(user) {
 		try {
 
@@ -13,7 +13,7 @@ export default api => {
 			let error = '[500] Authentication failed.'
 			const authResp = yield call(api.auth, user)
 			const authData = prop('data', authResp)
-			
+
 			// Did user login?
 			if (authData.ok) {
 				yield put(Actions.loginAuthSuccess(authData))
@@ -35,7 +35,7 @@ export default api => {
 			yield put(Actions.loginFailure(error))
 		} finally {
 			if (yield cancelled()) {
-        // TODO task cancelled
+				// TODO task cancelled
 				console.log('Auth task cancelled.')
 			}
 		}
@@ -50,7 +50,7 @@ export default api => {
 			// Terminate task
 			if (action.type === Types.LOGOUT) yield cancel(task)
 		}
-  }
+	}
 
 	// LOGOUT
 	function* logoutFlow() {
@@ -61,7 +61,7 @@ export default api => {
 	}
 
 	// Register
-	function* register(user) {		
+	function* register(user) {
 		try {
 			let error = '[500] register failed.'
 			const registerResp = yield call(api.register, user)
@@ -86,7 +86,7 @@ export default api => {
 			} else {
 				error = path(['data', 'data'], registerResp) || error
 				yield put(Actions.registerFailure(error))
-			}			
+			}
 
 		} catch (error) {
 			yield put(Actions.registerFailure(error))
@@ -114,9 +114,9 @@ export default api => {
 	}
 
 
-  return {
-    loginFlow,
+	return {
+		loginFlow,
 		logoutFlow,
 		registerFlow,
-  }
+	}
 }

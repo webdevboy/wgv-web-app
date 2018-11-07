@@ -1,7 +1,7 @@
 import { createActions } from 'reduxsauce';
 
 export const { Types, Creators } = createActions({
-  // Notification
+	// Notification
 	setNotification: ['message', 'level'],
 	clearNotification: null,
 	// Auth & User
@@ -16,5 +16,5 @@ export const { Types, Creators } = createActions({
 	registerAttempt: ['user'],
 	registerSuccess: ['user', 'success'],
 	registerFailure: ['error'],
-	
+
 })

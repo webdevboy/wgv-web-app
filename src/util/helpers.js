@@ -7,8 +7,8 @@ export const formatDate = (value, format) =>
 	value ? moment(value).format(format || 'DD/MM/YYYY HH:mm') : ''
 
 export const findById = converge(
-  find,
-  [pipe(nthArg(0), propEq('id')), nthArg(1)]
+	find,
+	[pipe(nthArg(0), propEq('id')), nthArg(1)]
 )
 
 export const searchInString = (string, { value }) => all(

@@ -22,11 +22,11 @@ const App = () => (
 				<Index />
 			</ConnectedRouter>
 		</PersistGate>
-  </Provider>
+	</Provider>
 )
 
 const rootElement = document.querySelector('#root')
 
 if (rootElement) {
-  render(<App />, rootElement)
+	render(<App />, rootElement)
 }

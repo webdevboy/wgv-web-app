@@ -23,9 +23,9 @@ export default api => {
 	function* watchersFlow() {
 		yield fork(takeLatest, '*', watchUnauthorized)
 		yield fork(takeLatest, '*', watchNotification)
-  }
+	}
 
-  return {
-    watchersFlow,
-  }
+	return {
+		watchersFlow,
+	}
 }

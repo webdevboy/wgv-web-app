@@ -25,17 +25,14 @@ const styles = theme => ({
 })
 
 
-const NotFound = ({ classes }) => (
+const Admin = ({ classes }) => (
   <div className={classes.flexCenter}>
-    <IconError className={classes.icon} color="action" />
-    <Typography variant="headline" align="center" gutterBottom>
-      {'This page does not exist.'}
-    </Typography>
+    <h1>Admin Page</h1>
   </div>
 )
 
-NotFound.propTypes = {
+Admin.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(NotFound)
+export default withStyles(styles)(Admin)

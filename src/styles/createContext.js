@@ -34,7 +34,7 @@ const theme = createMuiTheme({
 			default: '#fff',
 			paper: blueGrey[900],
 		},
-  },
+	},
 	zIndex: {
 		drawer: drawerZindex,
 	},
@@ -114,13 +114,13 @@ jss.options.createGenerateClassName = createGenerateClassName
 export const sheetsManager = new Map()
 
 export default function createContext() {
-  console.log('THEME', theme)
+	console.log('THEME', theme)
 	return {
-    jss,
-    theme,
-    // This is needed in order to deduplicate the injection of CSS in the page.
-    sheetsManager,
-    // This is needed in order to inject the critical CSS.
-    sheetsRegistry: new SheetsRegistry(),
-  }
+		jss,
+		theme,
+		// This is needed in order to deduplicate the injection of CSS in the page.
+		sheetsManager,
+		// This is needed in order to inject the critical CSS.
+		sheetsRegistry: new SheetsRegistry(),
+	}
 }

@@ -16,16 +16,16 @@ export const history = createHistory()
 
 const persistConfig = {
   // debug: true,
-	key: 'root',
+  key: 'root',
   storage,
-	whitelist: ['auth'],
-	transforms: [immutableTransform],
-	// stateReconciler: hardSet
+  whitelist: ['auth'],
+  transforms: [immutableTransform],
+  // stateReconciler: hardSet
 }
 
 const rootReducer = persistCombineReducers(persistConfig, {
-	...reducers,
-	router: routerReducer,
+  ...reducers,
+  router: routerReducer,
 })
 
 const routingMiddleware = routerMiddleware(history)
@@ -37,20 +37,20 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default () => {
   const enhancers = [
-		applyMiddleware(sagaMiddleware, routingMiddleware),
-	]
+    applyMiddleware(sagaMiddleware, routingMiddleware),
+  ]
 
-	// Create store
+  // Create store
   const store = createStore(
-		rootReducer,
-		composeEnhancers(...enhancers)
-	)
+    rootReducer,
+    composeEnhancers(...enhancers)
+  )
 
-	// Persist store
-	const persistor = persistStore(store)
+  // Persist store
+  const persistor = persistStore(store)
 
-	// Run sagas
-	sagaMiddleware.run(sagas)
+  // Run sagas
+  sagaMiddleware.run(sagas)
 
   return { persistor, store }
 }

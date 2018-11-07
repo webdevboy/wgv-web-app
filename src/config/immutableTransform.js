@@ -11,12 +11,12 @@ const toImmutable = raw => Immutable(raw)
 
 export default {
   out: state => {
-		state.mergeDeep = identity
-		// console.log('oubound', toImmutable(state));
+    state.mergeDeep = identity
+    // console.log('oubound', toImmutable(state));
     return toImmutable(state)
   },
   in: raw => {
-		// console.log('inbound', fromImmutable(raw));
-		return fromImmutable(raw)
-	}
+    // console.log('inbound', fromImmutable(raw));
+    return fromImmutable(raw)
+  }
 }

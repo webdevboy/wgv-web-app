@@ -8,20 +8,20 @@ import Typography from '@material-ui/core/Typography'
 import Logo from '../assets/logo.svg'
 
 const styles = theme => ({
-	flex: {
-		flex: 1,
-	},
+  flex: {
+    flex: 1,
+  },
   root: {
-		display: 'flex',
+    display: 'flex',
     justifyContent: 'center',
     paddingBottom: 20,
-	},
-	container: {
-		justifyContent: 'center',
-		maxWidth: 1100,
-		position: 'relative',
   },
-	logo: {
+  container: {
+    justifyContent: 'center',
+    maxWidth: 1100,
+    position: 'relative',
+  },
+  logo: {
     width: '100%',
     textAlign: 'center'
   },
@@ -33,25 +33,25 @@ const styles = theme => ({
     textAlign: 'center',
     color: '#231f20',
     fontSize: 12
-	},
+  },
 })
 
 
 const Footer = ({
-	classes,
+  classes,
 }) => (
-	<div className={classes.root}>
-		<div className={classes.container}>
-			<div className={classes.logo}>
-				<img src={Logo} className={classes.img} alt='logo'/>
-			</div>
-			<Typography variant="body1" className={classes.text}>WILL GRANT VISION FOUNDATION IS A 501C3 FOR-PURPOSE.ORG</Typography>
-		</div>
-	</div>
+  <div className={classes.root}>
+    <div className={classes.container}>
+      <div className={classes.logo}>
+        <img src={Logo} className={classes.img} alt='logo'/>
+      </div>
+      <Typography variant="body1" className={classes.text}>WILL GRANT VISION FOUNDATION IS A 501C3 FOR-PURPOSE.ORG</Typography>
+    </div>
+  </div>
 )
 
 Footer.propTypes = {
-	classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Footer)

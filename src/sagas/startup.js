@@ -1,5 +1,5 @@
 import { take, select } from 'redux-saga/effects'
-import { Types} from '../actions'
+import { Types } from '../actions'
 import { REHYDRATE } from 'redux-persist'
 
 const getToken = state => state.auth.token
@@ -15,15 +15,15 @@ export default api => {
 				Types.LOGIN_USER_SUCCESS,
 			])
 			let token = yield select(getToken)
-			
+
 			// Start booting
 			if (token) {
 				api.setAuthHeader(token)
 			}
 		}
-  }
+	}
 
-  return {
-    bootingFlow,
-  }
+	return {
+		bootingFlow,
+	}
 }
