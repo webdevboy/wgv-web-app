@@ -46,6 +46,7 @@ import Glasses from './glasses'
 import Profile from './profile'
 import Prescription from './prescription'
 import Vision from './vision'
+import Appointment from './appointment'
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
@@ -276,6 +277,7 @@ class Index extends Component {
               <PrivateRoute exact path="/profile" canAccess={isAuthenticated} component={Profile} />
               <PrivateRoute exact path="/glasses" canAccess={isAuthenticated} component={Glasses} />
               <PrivateRoute exact path="/prescription" canAccess={isAuthenticated} component={Prescription} />
+              <PrivateRoute exact path="/appointment" component={Appointment} />
               <PrivateRoute exact path="/vision" canAccess={isAuthenticated} component={Vision} />
               <Route component={NotFound} />
             </ConnectedSwitch>
