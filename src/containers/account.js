@@ -180,6 +180,20 @@ class Account extends Component {
     if (this.props.isAuthenticated || nextProps.isAuthenticated) {
       this.props.push('/profile');
     }
+    // if ((this.props.isAuthenticated || nextProps.isAuthenticated) && !this.props.user.isAdmin) {
+    //   this.props.push('/profile');
+    // } else if((this.props.isAuthenticated || nextProps.isAuthenticated) && this.props.user.isAdmin) {
+    //   this.props.push('/admin');
+    // }
+  }
+
+  componentDidMount() {
+    console.log(this.props.user)
+    if(this.props.isAuthenticated && !this.props.user.isAdmin) {
+      this.props.push('/profile');
+    } else if (this.props.isAuthenticated && this.props.user.isAdmin) {
+      this.props.push('/admin');
+    }
   }
 
   handleChange = name => event => {
@@ -222,7 +236,7 @@ class Account extends Component {
 
     if (email !== '' && password !== '' && !emailError && !passwordError) {
       // this.props.push('/profile');
-      this.props.loginAttempt({ username: email, password });
+      this.props.loginAttempt({ email: email, password })
     }
   }
 
@@ -230,13 +244,14 @@ class Account extends Component {
     const { regFirstName, regLastName, regEmail, regPassword, regConfirmPassword, regFirstNameError, regLastNameError, regEmailError, regPasswordError, regPasswordMatch } = this.state
 
     if (regFirstName !== '' && regLastName !== '' && regEmail !== '' && regPassword !== '' && regConfirmPassword !== '' && !regEmailError && !regPasswordError && !regPasswordMatch && !regFirstNameError && !regLastNameError) {
-      this.props.registerAttempt({ username: regEmail, password: regPassword, first_name: regFirstName, last_name: regLastName, appointments: [] });
+      this.props.registerAttempt({ email: regEmail, password: regPassword, firstName: regFirstName, lastName: regLastName });
     }
   }
 
   render() {
 
     const { classes, uiLoadingIn, uiLoadingNew, token } = this.props
+
     const { emailError, passwordError, regEmailError, regPasswordError, regPasswordMatch, regFirstNameError, regLastNameError } = this.state
 
     return (
@@ -272,9 +287,9 @@ class Account extends Component {
 
                   <div className={classes.actions}>
                     <div className={classes.action}>
-                      <Checkbox defaultChecked color="primary" value="checkedG" />
+                      <Checkbox color="primary" value="checkedG" />
                       Remomber Me
-                        </div>
+                    </div>
                     <div className={classes.action}>Forgot Password?</div>
                   </div>
 
@@ -360,7 +375,8 @@ const mapStateToProps = ({
   isAuthenticated: and(!!token, !!user),
   uiLoadingIn,
   uiLoadingNew,
-  token
+  token,
+  user
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

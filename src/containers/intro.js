@@ -124,7 +124,7 @@ class Intro extends Component {
         <div className={classes.contentHeader}>
           <div className={classes.miniContainer}>
             <div className={classes.title}>hello</div>
-            <div className={classes.link}>CLICK HERE IF YOU NEED AN EYE EXAM FOR FREE></div>
+            <div className={classes.link}>CLICK HERE IF YOU NEED AN EYE EXAM FOR FREE</div>
             <div className={classes.content}>We are fresh & innovative in our approach but we are a non-profit organization & our mission to give vision, needs your support. All proceeds from on demand care go directly to Will Grant Vision Foundation program services.</div>
           </div>
         </div>

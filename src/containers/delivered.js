@@ -10,6 +10,8 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Zoom from '@material-ui/core/Zoom'
 
+import { Creators as Actions } from '../actions'
+
 // Components
 
 const styles = theme => ({
@@ -171,6 +173,15 @@ class Delivered extends Component {
     this.props.push(to)
   }
 
+  checkType(value, event) {
+    const data = {
+      type: value,
+      location: ''
+    }
+    this.props.setSubscriptionType(data);
+    this.props.push('/pickDate');
+  }
+
   render() {
 
     const { classes } = this.props
@@ -190,21 +201,17 @@ class Delivered extends Component {
                 <Zoom in={true}>
                   <div className={classes.grid1}>
                     <div className={classes.p1}>GLASSES PRESCRIPTION</div>
-                    <div className={classes.or1}>
-                      or
-                          </div>
+                    <div className={classes.or1}>or</div>
                     <div className={classes.p1}>CONTACT LENS RENEWAL</div>
-                    <div className={classes.box}>
+                    <div className={classes.box} onClick={this.checkType.bind(this, '$150/single exam')}>
                       <div className={classes.p1}>SINGLE EXAM</div>
                       <div className={classes.p1}>
                         <p className={classes.dollar}>$</p>
                         <p className={classes.number}>150</p>
                       </div>
                     </div>
-                    <div className={classes.or}>
-                      or
-                          </div>
-                    <div className={classes.box}>
+                    <div className={classes.or}>or</div>
+                    <div className={classes.box} onClick={this.checkType.bind(this, '$24.99/month')}>
                       <div className={classes.p1}>VISIONAIRE</div>
                       <div className={classes.p2}>( subscription )</div>
                       <div className={classes.p1}>
@@ -213,7 +220,7 @@ class Delivered extends Component {
                         <p className={classes.dollar}>99</p>
                         <p className={classes.date}>/month</p>
                       </div>
-                      <div className={classes.p2}>Exam(annual) + Classes(cool)</div>
+                      <div className={classes.p2}>Exam (annual) + Glasses (cool)</div>
                     </div>
                   </div>
                 </Zoom>
@@ -223,17 +230,15 @@ class Delivered extends Component {
                   <div className={classes.grid2}>
                     <div className={classes.p1}>COMPLETE EYE EXAM</div>
                     <div className={classes.p3}>On a mobile bus customized<br />for an amazing experience</div>
-                    <div className={classes.box}>
+                    <div className={classes.box} onClick={this.checkType.bind(this, '$300/single exam')}>
                       <div className={classes.p1}>SINGLE EXAM</div>
                       <div className={classes.p1}>
                         <p className={classes.dollar}>$</p>
                         <p className={classes.number}>300</p>
                       </div>
                     </div>
-                    <div className={classes.or}>
-                      or
-                          </div>
-                    <div className={classes.box}>
+                    <div className={classes.or}>or</div>
+                    <div className={classes.box} onClick={this.checkType.bind(this, '$34.99/month')}>
                       <div className={classes.p1}>VISIONAIRE</div>
                       <div className={classes.p2}>( subscription )</div>
                       <div className={classes.p1}>
@@ -242,7 +247,7 @@ class Delivered extends Component {
                         <p className={classes.dollar}>99</p>
                         <p className={classes.date}>/month</p>
                       </div>
-                      <div className={classes.p2}>Exam(annual) + Classes(cool)</div>
+                      <div className={classes.p2}>Exam (annual) + Glasses (cool)</div>
                     </div>
                   </div>
                 </Zoom>
@@ -259,11 +264,16 @@ Delivered.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
+const {
+  setSubscriptionType
+} = Actions;
+
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,
-  replace
+  replace,
+  setSubscriptionType
 }, dispatch)
 
 export default compose(

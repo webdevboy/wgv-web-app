@@ -1,6 +1,6 @@
 import { path, prop } from 'ramda'
 // import { delay } from 'redux-saga'
-import { take, put, call, fork, cancel, cancelled } from 'redux-saga/effects'
+import { take, put, call, fork, cancel, cancelled, select } from 'redux-saga/effects'
 import { Types, Creators as Actions } from '../actions'
 
 
@@ -8,24 +8,39 @@ export default api => {
 	// AUTH
 	function* auth(user) {
 		try {
-
-			// yield call(delay, 3000)
-			let error = '[500] Authentication failed.'
+			let error = 'Authentication failed.'
 			const authResp = yield call(api.auth, user)
-			const authData = prop('data', authResp)
 
 			// Did user login?
-			if (authData.ok) {
-				yield put(Actions.loginAuthSuccess(authData))
+			if (authResp.ok) {
+				yield put(Actions.loginAuthSuccess(authResp.data))
 
-				// Attempt to get user
-				const userResp = yield call(api.getUser, user)
-				const userData = path(['data'], userResp)
+				const success = 'Login successfully.'
+				yield put(Actions.loginUserSuccess(authResp.data.data, success))
 
-				// Finally logged in?
-				if (userData.ok) {
-					const success = '[200] Login successful.'
-					return yield put(Actions.loginUserSuccess(userData.data, success))
+				const state = yield select();
+				const data = state.user;
+				const user = authResp.data.data;
+				let error = 'Booking failed.'
+				console.log('data', data);
+				console.log('user', user)
+				if (data.bookingTime && data.bookingDate) {
+					const bookingRes = yield call(api.appointment, {
+						appointment: user.firstName + ' ' + user.lastName,
+						location: data.location,
+						bookingTime: data.bookingTime,
+						bookingDate: data.bookingDate,
+						type: data.type,
+						email: user.email
+					})
+					console.log('bookingRes', bookingRes)
+					if (bookingRes.ok) {
+						const success = 'create successfully. Please check your email'
+						return yield put(Actions.bookingSuccess(bookingRes.data.data, success))
+					} else {
+						error = path(['data', 'error_msg'], bookingRes) || error
+						yield put(Actions.bookingFailure(error))
+					}
 				}
 			} else {
 				error = path(['data', 'error_msg'], authResp) || error
@@ -65,23 +80,17 @@ export default api => {
 		try {
 			let error = '[500] register failed.'
 			const registerResp = yield call(api.register, user)
+			console.log('registerResp', registerResp)
 			const registerData = path(['data'], registerResp)
-
-			if (registerData.ok) {
+			console.log("registerData", registerData)
+			if (registerResp.ok) {
 
 				const regData = registerData.data
 
-				yield put(Actions.loginAuthSuccess(regData))
+				yield put(Actions.loginAuthSuccess(registerData))
 
-				// Attempt to get user
-				const userResp = yield call(api.getUser, user)
-				const userData = path(['data'], userResp)
-
-				// Finally logged in?
-				if (userData.ok) {
-					const success = '[200] Register successful.'
-					return yield put(Actions.loginUserSuccess(userData.data, success))
-				}
+				const success = '[200] Register successfully.'
+				return yield put(Actions.loginUserSuccess(regData, success))
 
 			} else {
 				error = path(['data', 'data'], registerResp) || error

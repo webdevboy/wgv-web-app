@@ -93,7 +93,8 @@ const styles = theme => ({
     padding: 20
   },
   img: {
-    width: '100%'
+    width: '100%',
+    cursor: 'pointer'
   }
 })
 
@@ -122,6 +123,7 @@ class Profile extends Component {
               <div className={classes.userInfo}>
                 <img src={Avatar} className={classes.avatar} alt='' />
                 <div className={classes.userName}>{user.first_name} {user.last_name}</div>
+                <div className={classes.userName}>{user.email}</div>
               </div>
 
               <Grid container className={classes.grid} justify="center">
@@ -139,17 +141,17 @@ class Profile extends Component {
               <Grid container className={classes.grid} justify="center">
                 <Grid item xs={12} md={4}>
                   <div className={classes.cont}>
-                    <img className={classes.img} src={img1} alt='' />
+                    <img className={classes.img} src={img1} alt='' onClick={() => this.navigate('/glasses')}/>
                   </div>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <div className={classes.cont}>
-                    <img className={classes.img} src={img2} alt='' />
+                    <img className={classes.img} src={img2} alt='' onClick={() => this.navigate('/prescription')} />
                   </div>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <div className={classes.cont}>
-                    <img className={classes.img} src={img3} alt='' />
+                    <img className={classes.img} src={img3} alt='' onClick={() => this.navigate('/vision')}/>
                   </div>
                 </Grid>
               </Grid>

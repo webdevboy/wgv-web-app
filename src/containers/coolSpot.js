@@ -10,6 +10,8 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Slide from '@material-ui/core/Slide'
 
+import { Creators as Actions } from '../actions'
+
 // Components
 
 const styles = theme => ({
@@ -81,19 +83,36 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       alignItems: 'center',
     },
+    justifyContent: 'space-around'
   },
   item: {
-    marginBottom: 10,
     cursor: 'pointer',
+    padding: 10
   },
+  itemActivity: {
+  //  backgroundColor: '#ffffff',
+    padding: 10,
+  },
+  h1Activity: {
+    color: '#000000',
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 1.5
+  },
+  h2Activity: {
+    color: '#000000',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+
   h1: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 500,
     color: '#2f2f2f',
     lineHeight: 1.5
   },
   h2: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 300,
     color: '#2f2f2f',
   },
@@ -105,6 +124,17 @@ const styles = theme => ({
     width: 170,
     height: 120,
     border: '1px solid white',
+    margin: '20px 0',
+    cursor: 'pointer',
+  },
+  boxActivity: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 170,
+    height: 120,
+    border: '2px solid #ffffff',
     margin: '20px 0',
     cursor: 'pointer',
   },
@@ -137,6 +167,14 @@ const styles = theme => ({
     padding: '5px 0',
     fontWeight: 300,
   },
+  p1Activity: {
+    display: 'flex',
+    fontSize: 18,
+    textAlign: 'center',
+    color: '#000000',
+    padding: '5px 0',
+    fontWeight: 'bold',
+  },
   p2: {
     display: 'flex',
     fontSize: 11,
@@ -144,12 +182,53 @@ const styles = theme => ({
     color: '#2f2f2f',
     fontWeight: 100,
   },
+  p2Activity: {
+    display: 'flex',
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#000000',
+    fontWeight: 'bold',
+  },
 })
 
 class CoolSport extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      type: '',
+      location: ''
+    }
+  }
+
   navigate = to => () => {
     this.props.push(to)
+  }
+
+  checkType(value, event) {
+    this.setState({ type: value});
+    if(this.state.location !== '') {
+      const data = {
+        location: this.state.location,
+        type: value
+      }
+      this.props.setSubscriptionType(data);
+      this.props.push('/pickDate');
+    }
+
+  }
+
+  checkLocatoin(value, event) {
+    this.setState({ location: value});
+    if(this.state.type !== '') {
+      const data = {
+        location: value,
+        type: this.state.type
+      }
+      this.props.setSubscriptionType(data);
+      this.props.push('/pickDate');
+    }
   }
 
   render() {
@@ -169,51 +248,51 @@ class CoolSport extends Component {
             <Slide direction="left" in={true} mountOnEnter unmountOnExit>
               <Grid container className={classes.grid} justify="center">
                 <Grid item xs={12} md={6} className={classes.grid1}>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>downtown LA</div>
-                    <div className={classes.h2}>555 West 5th Street, 34th floor</div>
+                  <div className={ this.state.location === 'downtown LA' ? classes.itemActivity : classes.item}  onClick={this.checkLocatoin.bind(this, 'downtown LA')}>
+                    <div className={this.state.location === 'downtown LA' ? classes.h1Activity : classes.h1}>downtown LA</div>
+                    <div className={this.state.location === 'downtown LA' ? classes.h2Activity : classes.h2}>555 West 5th Street, 34th floor</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Long Beach</div>
-                    <div className={classes.h2}>100 W Broadway</div>
+                  <div className={ this.state.location === 'Long Beach' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Long Beach')}>
+                    <div className={this.state.location === 'Long Beach' ? classes.h1Activity : classes.h1}>Long Beach</div>
+                    <div className={this.state.location === 'Long Beach' ? classes.h2Activity : classes.h2}>100 W Broadway</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Santa Monica</div>
-                    <div className={classes.h2}>520 BroadWay 312 Arizona Ave</div>
+                  <div className={ this.state.location === 'Santa Monica' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Santa Monica')}>
+                    <div className={this.state.location === 'Santa Monica' ? classes.h1Activity : classes.h1}>Santa Monica</div>
+                    <div className={this.state.location === 'Santa Monica' ? classes.h2Activity : classes.h2}>520 BroadWay 312 Arizona Ave</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Manhattan Beach</div>
-                    <div className={classes.h2}>1240 Rosecrans Ave</div>
+                  <div className={ this.state.location === 'Manhattan Beach' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Manhattan Beach')}>
+                    <div className={this.state.location === 'Manhattan Beach' ? classes.h1Activity : classes.h1}>Manhattan Beach</div>
+                    <div className={this.state.location === 'Manhattan Beach' ? classes.h2Activity : classes.h2}>1240 Rosecrans Ave</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Hollywood</div>
-                    <div className={classes.h2}>7083 Hollywood Blvd</div>
+                  <div className={ this.state.location === 'Hollywood' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Hollywood')}>
+                    <div className={this.state.location === 'Hollywood' ? classes.h1Activity : classes.h1}>Hollywood</div>
+                    <div className={this.state.location === 'Hollywood' ? classes.h2Activity : classes.h2}>7083 Hollywood Blvd</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Culver City</div>
-                    <div className={classes.h2}>5792 West Jefferson Blvd</div>
+                  <div className={ this.state.location === 'Culver City' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Culver City')}>
+                    <div className={this.state.location === 'Culver City' ? classes.h1Activity : classes.h1}>Culver City</div>
+                    <div className={this.state.location === 'Culver City' ? classes.h2Activity : classes.h2}>5792 West Jefferson Blvd</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Playa Vista</div>
-                    <div className={classes.h2}>12655 W. Jefferson Blvd</div>
+                  <div className={ this.state.location === 'Playa Vista' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Playa Vista')}>
+                    <div className={this.state.location === 'Playa Vista' ? classes.h1Activity : classes.h1}>Playa Vista</div>
+                    <div className={this.state.location === 'Playa Vista' ? classes.h2Activity : classes.h2}>12655 W. Jefferson Blvd</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>La Brea</div>
-                    <div className={classes.h2}>925 N La Brea Ave, 4th floor</div>
+                  <div className={ this.state.location === 'La Brea' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'La Brea')}>
+                    <div className={this.state.location === 'La Brea' ? classes.h1Activity : classes.h1}>La Brea</div>
+                    <div className={this.state.location === 'La Brea' ? classes.h2Activity : classes.h2}>925 N La Brea Ave, 4th floor</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Burbank</div>
-                    <div className={classes.h2}>3900 W Alameda Ave</div>
+                  <div className={ this.state.location === 'Burbank' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Burbank')}>
+                    <div className={this.state.location === 'Burbank' ? classes.h1Activity : classes.h1}>Burbank</div>
+                    <div className={this.state.location === 'Burbank' ? classes.h2Activity : classes.h2}>3900 W Alameda Ave</div>
                   </div>
-                  <div className={classes.item}>
-                    <div className={classes.h1}>Pasadena</div>
-                    <div className={classes.h2}>177 E Colorado Blvd</div>
+                  <div className={ this.state.location === 'Pasadena' ? classes.itemActivity : classes.item} onClick={this.checkLocatoin.bind(this, 'Pasadena')}>
+                    <div className={this.state.location === 'Pasadena' ? classes.h1Activity : classes.h1}>Pasadena</div>
+                    <div className={this.state.location === 'Pasadena' ? classes.h2Activity : classes.h2}>177 E Colorado Blvd</div>
                   </div>
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.grid2}>
-                  <div className={classes.box}>
-                    <div className={classes.p1}>SINGLE EXAM</div>
-                    <div className={classes.p1}>
+                  <div className={ this.state.type === '$80/single exam' ? classes.boxActivity : classes.box} onClick={this.checkType.bind(this, '$80/single exam')}>
+                    <div className={ this.state.type === '$80/single exam' ? classes.p1Activity : classes.p1} >SINGLE EXAM</div>
+                    <div className={ this.state.type === '$80/single exam' ? classes.p1Activity : classes.p1} >
                       <p className={classes.dollar}>$</p>
                       <p className={classes.number}>80</p>
                     </div>
@@ -221,16 +300,16 @@ class CoolSport extends Component {
                   <div className={classes.or}>
                     or
                       </div>
-                  <div className={classes.box}>
-                    <div className={classes.p1}>VISIONAIRE</div>
-                    <div className={classes.p2}>( subscription )</div>
-                    <div className={classes.p1}>
+                  <div className={ this.state.type === '$14.00/month' ? classes.boxActivity : classes.box} onClick={this.checkType.bind(this, '$14.00/month')}>
+                    <div className={ this.state.type === '$14.00/month' ? classes.p1Activity : classes.p1} >VISIONAIRE</div>
+                    <div className={ this.state.type === '$14.00/month' ? classes.p2Activity : classes.p2}>( subscription )</div>
+                    <div className={ this.state.type === '$14.00/month' ? classes.p1Activity : classes.p1} >
                       <p className={classes.dollar}>$</p>
                       <p className={classes.number}>14.</p>
                       <p className={classes.dollar}>00</p>
                       <p className={classes.date}>/month</p>
                     </div>
-                    <div className={classes.p2}>Exam(annual) + Classes(cool)</div>
+                    <div className={ this.state.type === '$14.00/month' ? classes.p2Activity : classes.p2}>Exam (annual) + Glasses (cool)</div>
                   </div>
                 </Grid>
               </Grid>
@@ -246,11 +325,16 @@ CoolSport.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
+const {
+  setSubscriptionType
+} = Actions;
+
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,
-  replace
+  replace,
+  setSubscriptionType
 }, dispatch)
 
 export default compose(

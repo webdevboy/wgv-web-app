@@ -4,7 +4,7 @@ import { prop, contains } from 'ramda'
 
 // Define API
 const api = apisauce.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL + '/api',
+    baseURL: 'http://localhost:8080/api',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
@@ -89,9 +89,12 @@ api.addResponseTransform(response => {
 // Endpoints
 const ENDPOINT = {
     OAUTH: '/users/login',
-    REGISTER: '/users',
+    REGISTER: '/user',
     LOGOUT: '/logout',
-    USER: '/users/profile',
+    USER: '/user/:userId',
+    APPOINTMENT: '/appointment',
+    USERSLIST: '/user',
+    BOOKINGDATE: '/bookingdate',
 }
 
 // TODO how to cancel/abort http request ?
@@ -104,4 +107,11 @@ export default {
     register: user => api.post(`${ENDPOINT.REGISTER}`, user),
     logout: () => api.get(ENDPOINT.LOGOUT),
     getUser: () => api.get(`${ENDPOINT.USER}`, {}),
+    appointment: data => api.post(`${ENDPOINT.APPOINTMENT}`, data),
+    getAppointments: () => api.get(ENDPOINT.APPOINTMENT),
+    getBookingDates: () => api.get(ENDPOINT.BOOKINGDATE),
+    updateSeletectedAppointmentStatus: data => api.put(`${ENDPOINT.APPOINTMENT}`, data),
+    getUsers: () => api.get(ENDPOINT.USERSLIST),
+    getUserInfo: userId => api.get(`user/${userId}`),
+    updateUserInfo: data => api.put(`user/${data.userId}`, data.photo)
 }

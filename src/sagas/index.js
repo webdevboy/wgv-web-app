@@ -5,6 +5,7 @@ import api from '../services/api'
 import startup from './startup'
 import runtime from './runtime'
 import auth from './auth'
+import user from './user'
 
 // Start the daemons
 export default function* root() {
@@ -14,5 +15,12 @@ export default function* root() {
 		auth(api).loginFlow(),
 		auth(api).logoutFlow(),
 		auth(api).registerFlow(),
+		user(api).watchSetBook(),
+		user(api).getAppointments(),
+		user(api).watchUserAppointment(),
+		user(api).watchUsers(),
+		user(api).watchUserInfo(),
+		user(api).watchUpdateUserInfo(),
+		user(api).watchBookingDates(),
   ])
 }

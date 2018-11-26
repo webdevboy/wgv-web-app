@@ -9,6 +9,8 @@ import { push, replace } from 'react-router-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Slide from '@material-ui/core/Slide'
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 // Components
 import glass from '../assets/glass.png'
@@ -59,7 +61,7 @@ const styles = theme => ({
     minHeight: 'calc(100vh - 370px)',
   },
   grid: {
-    margin: '100px 0',
+    margin: 0,
     minHeight: 350,
     [theme.breakpoints.down('md')]: {
       margin: '50px 0',
@@ -118,6 +120,17 @@ const styles = theme => ({
     width: '100%',
     height: 60,
     backgroundColor: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  back: {
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: '#757575',
+    '&:hover': {
+      backgroundColor: '#757575',
+    },
   }
 })
 
@@ -125,7 +138,7 @@ class Glasses extends Component {
 
   render() {
 
-    const { classes } = this.props
+    const { classes, user } = this.props
 
     return (
       <div className={classes.root}>
@@ -137,12 +150,18 @@ class Glasses extends Component {
         </div>
         <div className={classes.contents}>
           <div className={classes.container}>
+            <IconButton
+              onClick={() => this.props.push('/profile')}
+              className={classes.back}
+              >
+              <ChevronLeftIcon />
+            </IconButton>
             <Slide direction="left" in={true} mountOnEnter unmountOnExit>
               <Grid container className={classes.grid} justify="center">
                 <Grid item xs={12} md={6} className={classes.item}>
                   <div className={classes.card}>
                     <div className={classes.in1}>
-                      <img className={classes.img} src={glass} alt='' />
+                      <img className={classes.img} src={user.pictureUrl} alt='' />
                     </div>
                   </div>
                 </Grid>
@@ -151,16 +170,16 @@ class Glasses extends Component {
                     <div className={classes.in2}>
                       <div className={classes.h1}>about your glasses</div>
                       <div className={classes.list}>
-                        <div className={classes.h2}>LENS</div>
-                        <div className={classes.info} />
+                        <div className={classes.h2}>LENSES</div>
+                        <div className={classes.info}>{user.lens} </div>
                       </div>
                       <div className={classes.list}>
                         <div className={classes.h2}>FRAMES</div>
-                        <div className={classes.info} />
+                        <div className={classes.info}>{user.frames} </div>
                       </div>
                       <div className={classes.list}>
                         <div className={classes.h2}>WARRANTY</div>
-                        <div className={classes.info} />
+                        <div className={classes.info}>{user.warranty} </div>
                       </div>
                     </div>
                   </div>
@@ -178,7 +197,11 @@ Glasses.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({
+  auth: { user },
+}) => ({
+  user
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,

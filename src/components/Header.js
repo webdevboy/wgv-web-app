@@ -112,7 +112,7 @@ class Header extends React.Component {
                     className={classes.button}
                     onClick={this.handleClick}
                   >
-                    {user.first_name}
+                    {user.firstName} {user.lastName}
                   </Button>
                   <Menu
                     id="simple-menu"

@@ -8,7 +8,8 @@ import { push, replace } from 'react-router-redux'
 // Material UI
 import { withStyles } from '@material-ui/core/styles'
 import Slide from '@material-ui/core/Slide'
-
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // Components
 
 const styles = theme => ({
@@ -58,7 +59,7 @@ const styles = theme => ({
   },
   grid: {
     backgroundColor: '#cfe1e3',
-    margin: '100px 0',
+    margin: 0,
     minHeight: 350,
     [theme.breakpoints.down('md')]: {
       margin: '50px 0',
@@ -76,6 +77,14 @@ const styles = theme => ({
     width: '100%',
     fontSize: 15,
     lineHeight: 1.5
+  },
+  back: {
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: '#757575',
+    '&:hover': {
+      backgroundColor: '#757575',
+    },
   }
 })
 
@@ -83,7 +92,7 @@ class Vision extends Component {
 
   render() {
 
-    const { classes } = this.props
+    const { classes, user } = this.props
 
     return (
       <div className={classes.root}>
@@ -95,17 +104,17 @@ class Vision extends Component {
         </div>
         <div className={classes.contents}>
           <div className={classes.container}>
+            <IconButton
+              onClick={() => this.props.push('/profile')}
+              className={classes.back}
+              >
+              <ChevronLeftIcon />
+            </IconButton>
             <Slide direction="left" in={true} mountOnEnter unmountOnExit>
               <div className={classes.grid}>
                 <div className={classes.in}>
-                  <div className={classes.h1}>admin final content</div>
-                  <div className={classes.p1}>Lorem ipsum has become the industry standard for design mockups and prototypes. By adding a little bit
-of Latin to a mockup, you’re able to show clients a more complete version of your design without actually
-having to invest time and effort drafting copy.
-But despite all its benefits, seeing the same random Latin text in every design can get a little boring for you
-and your clients. So if you have a client who’s got a sense of humour or if you’re just tired of going the
-traditional route in your mockups, here are 15 creative and funny lorem ipsum text generators that are
-sure to lighten the mood at any client meeting.</div>
+                  <div className={classes.h1}>{user.visionTitle}</div>
+                  <div className={classes.p1}>{user.visionContent}</div>
                 </div>
               </div>
             </Slide>
@@ -120,7 +129,11 @@ Vision.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({
+  auth: { user },
+}) => ({
+  user
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,

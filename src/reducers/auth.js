@@ -21,6 +21,7 @@ const loginAttempt = state => {
 const loginAuthSuccess = (state, { auth }) => {
 	return state.merge({
 		token: auth.token,
+		uiLoadingIn: false
 	})
 }
 
